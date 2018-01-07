@@ -43,8 +43,6 @@ class PDFFile
     @pdf.font_size = 12
     input.pages.each_with_index do |statements, page|
       render_card_fronts(statements)  
-      # @pdf.start_new_page
-      # render_card_backs
       @pdf.start_new_page unless page == input.number_of_pages-1
     end
     @pdf.render_file("output.pdf")
@@ -118,7 +116,4 @@ class PDFFile
     end
   end
 
-  def render_card_backs
-    draw_grid
-  end
 end

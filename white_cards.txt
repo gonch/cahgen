@@ -1,0 +1,2 @@
+Git hooks are a secret breeding ground for _____.
+______ helps me code until the wee hours of the morning.

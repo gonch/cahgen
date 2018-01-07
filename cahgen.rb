@@ -18,14 +18,12 @@ require "trollop"
 # Library includes
 require "./lib/inputfile"
 require "./lib/blank_input"
-require "./lib/question_pdf"
-require "./lib/answer_pdf"
+require "./lib/pdf_file"
 
 opts = Trollop.options do
-  opt :question, "These should be formatted as questions"
-  opt :answer, "These should be formatted as answers"
+  opt :black, "Generate black cards"
+  opt :white, "Generate white cards"
   opt :blank, "Make a blank sheet"
-  opt :single, "Make a single card"
 end
 
 input = if opts[:blank]
@@ -36,7 +34,7 @@ else
   InputFile.from_stdin
 end
 
-white = if opts[:question]
+white = if opts[:black]
   false
 else
   true
