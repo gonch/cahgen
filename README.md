@@ -1,6 +1,6 @@
-# cahgen.rb
+# Cards Against Humanity Card Generator
 
-PDF generator for Cards Against Humanity
+PDF generator for Cards Against Humanity. Forked from https://github.com/jyruzicka/cahgen adding preferred format and black cards
 
 ## What is Cards Against Humanity?
 
@@ -33,12 +33,8 @@ Step 1: _____\\Step 2: _____\\Step 3: Profit!
 Now all you need to do is run `cahgen`:
 
 ```
-ruby cahgen.rb --answers answerfile.txt
+ruby cahgen.rb --white white_cards.txt
 ```
-
-## I thought Cards Against Humanity used white and black cards to differentiate between questions and answers
-
-They do! But I like my printer's ink cartridge and want some left, so instead I'm using punctuation.
 
 ## Where's my output file?
 

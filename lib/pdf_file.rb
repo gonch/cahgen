@@ -45,7 +45,7 @@ class PDFFile
       render_card_fronts(statements)  
       @pdf.start_new_page unless page == input.number_of_pages-1
     end
-    @pdf.render_file("output.pdf")
+    @pdf.render_file(white ? "output_white.pdf" : "output_black.pdf")
   end
 
   def fill_background
