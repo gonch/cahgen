@@ -3,6 +3,7 @@ require "prawn/measurement_extensions"
 
 class PDFFile
   attr_accessor :input
+  attr_accessor :white
 
   #-------------------------------------------------------------------------------
   # Constants for card manipulation
@@ -21,9 +22,12 @@ class PDFFile
   MARGIN_LEFT = (A4_WIDTH - PAGE_WIDTH) / 2
   MARGIN_TOP = (A4_HEIGHT - PAGE_HEIGHT) / 2
 
+  WHITE_COLOR = 'FFFFFF'
+  BLACK_COLOR = '000000'
 
-  def initialize input
+  def initialize (input, white)
     @input = input
+    @white = white
   end
 
   def render!
@@ -37,18 +41,33 @@ class PDFFile
 
     @pdf.font "Helvetica", :style => :bold
     @pdf.font_size = 12
-
     input.pages.each_with_index do |statements, page|
-      render_card_fronts(statements)
-      @pdf.start_new_page
-      render_card_backs
+      render_card_fronts(statements)  
+      # @pdf.start_new_page
+      # render_card_backs
       @pdf.start_new_page unless page == input.number_of_pages-1
     end
     @pdf.render_file("output.pdf")
   end
 
+  def fill_background
+    if white
+      @pdf.fill_color WHITE_COLOR
+    else 
+      @pdf.fill_color BLACK_COLOR
+    end
+    @pdf.stroke do
+      @pdf.fill_rectangle [0,PAGE_HEIGHT], PAGE_WIDTH, PAGE_HEIGHT
+    end
+  end
+
   # Draw a grid for the cards
   def draw_grid
+    if white
+      @pdf.stroke_color BLACK_COLOR
+    else 
+      @pdf.stroke_color WHITE_COLOR
+    end
       @pdf.stroke do
       #Draw vertical lines
       0.upto(4) do |i|
@@ -81,14 +100,20 @@ class PDFFile
   end
 
   def render_card_fronts(statements)
+    fill_background
     draw_grid
     statements.each_with_index do |line, idx|
       box(idx) do
         # Text
+        if white
+          @pdf.fill_color BLACK_COLOR
+        else 
+          @pdf.fill_color WHITE_COLOR
+        end
         @pdf.text line.to_s
         # Logo
         logo_size = 7.mm
-        @pdf.image line.icon, fit: [logo_size,logo_size], at: [@pdf.bounds.width-logo_size,logo_size]
+        @pdf.image line.icon, fit: [logo_size,logo_size], at: [0,logo_size]
       end
     end
   end

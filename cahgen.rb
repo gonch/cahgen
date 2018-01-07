@@ -36,12 +36,12 @@ else
   InputFile.from_stdin
 end
 
-output_class = if opts[:question]
-  QuestionPDF
+white = if opts[:question]
+  false
 else
-  AnswerPDF
+  true
 end
 
-output = output_class.new(input)
+output = PDFFile.new(input,white)
 
 output.render!
